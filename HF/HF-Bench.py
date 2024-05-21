@@ -25,7 +25,7 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
     input_ids = input_ids.to(torch.int64).cuda()
 
     oom_flag = False
-    n_decode = decode_k * 1024
+    n_decode = int(decode_k * 1024)
     with trange(n_decode, ncols=100) as prog:
         for i in prog:
             try:
