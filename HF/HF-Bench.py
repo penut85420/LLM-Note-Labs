@@ -42,7 +42,7 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
                 prog.desc = f"Memory: {delta_mem:.0f}/{total_mem:.0f} MiB"
                 prog.desc += " (OOM)" if oom_flag else ""
 
-    total_length = (seqlen + i) * batch_size
+    total_length = (seqlen + i + 1) * batch_size
     print(f"Decode Length: {i}")
     print(f"Total Length: {total_length}")
 
