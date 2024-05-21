@@ -5,13 +5,7 @@ from transformers import AutoModelForCausalLM
 
 
 @torch.inference_mode()
-def main(
-    batch_size=1,
-    seqlen_k=1,
-    decode_k=1,
-    attn="eager",
-    model_path="meta-llama/Meta-Llama-3-8B",
-):
+def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
     m = AutoModelForCausalLM.from_pretrained(
         model_path,
         device_map="auto",
