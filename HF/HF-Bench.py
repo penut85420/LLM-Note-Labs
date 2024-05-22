@@ -23,6 +23,8 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
     pkv = None
     input_ids = torch.zeros(batch_size, seqlen)
     input_ids = input_ids.to(torch.int64).cuda()
+    input_ids_1 = torch.zeros(batch_size, 1)
+    input_ids_1 = input_ids_1.to(torch.int64).cuda()
 
     oom_flag = False
     n_decode = int(decode_k * 1024)
@@ -31,8 +33,7 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
             try:
                 out = m(input_ids, past_key_values=pkv)
                 pkv = out.past_key_values
-                input_ids = torch.zeros(batch_size, 1)
-                input_ids = input_ids.to(torch.int64).cuda()
+                input_ids = input_ids_1
             except:
                 oom_flag = True
                 break
