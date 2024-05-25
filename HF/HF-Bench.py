@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM
 
 
 @torch.inference_mode()
-def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
+def main(model_path, batch_size=1, k_prefill=1, k_decode=1, attn="eager"):
     m = AutoModelForCausalLM.from_pretrained(
         model_path,
         device_map="auto",
@@ -17,17 +17,17 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
     init_mem = torch.cuda.memory_reserved() / unit
     print(f"Model Weight Memory Usage: {init_mem:.0f} MiB")
 
-    seqlen = int(seqlen_k * 1024)
-    print(f"Sequence Length: {seqlen}")
+    n_prefill = int(k_prefill * 1024)
+    print(f"Sequence Length: {n_prefill}")
 
     pkv = None
-    input_ids = torch.zeros(batch_size, seqlen)
+    input_ids = torch.zeros(batch_size, n_prefill)
     input_ids = input_ids.to(torch.int64).cuda()
     input_ids_1 = torch.zeros(batch_size, 1)
     input_ids_1 = input_ids_1.to(torch.int64).cuda()
 
     oom_flag = False
-    n_decode = int(decode_k * 1024)
+    n_decode = int(k_decode * 1024)
     with trange(n_decode, ncols=100) as prog:
         for i in prog:
             try:
@@ -35,6 +35,7 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
                 pkv = out.past_key_values
                 input_ids = input_ids_1
             except:
+                i -= 1
                 oom_flag = True
                 break
             finally:
@@ -44,7 +45,7 @@ def main(model_path, batch_size=1, seqlen_k=1, decode_k=1, attn="eager"):
                 prog.desc += " (OOM)" if oom_flag else ""
 
     i += 1
-    total_length = (seqlen + i) * batch_size
+    total_length = (n_prefill + i) * batch_size
     print(f"Decode Length: {i}")
     print(f"Total Length: {total_length}")
 
