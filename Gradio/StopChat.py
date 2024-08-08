@@ -18,14 +18,14 @@ def get_resp():
 def send_msg(msg: str, chat: list):
     resp = get_resp()
     chat.append([msg, None])
-    return None, chat, resp, Event()
+    return None, chat, resp, Event()  # 在這裡建立新事件
 
 
 def show_resp(chat: list, resp, event: Event):
     chat[-1][1] = ""
     for ch in resp:
-        if event.is_set():
-            event.clear()
+        if event.is_set():  # 檢查停止事件是否被觸發
+            event.clear()  # 清除事件狀態
             chat[-1][1] += " ..."
             chat.append(["冷靜！", "好吧"])
             yield chat
@@ -36,11 +36,11 @@ def show_resp(chat: list, resp, event: Event):
 
 
 def stop_show(event: Event):
-    event.set()
+    event.set()  # 觸發停止事件
 
 
 with gr.Blocks() as demo:
-    event = gr.State(None)
+    event = gr.State(None)  # threading.Event 不能用來初始化 gr.State
     resp = gr.State(None)
     chat = gr.Chatbot([[None, "喵！"]], label="喵星人", height=230)
     msg = gr.Textbox(label="學貓叫")
