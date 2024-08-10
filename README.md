@@ -25,9 +25,10 @@
 
 ## 內文勘誤
 
-因為書本內容受限於筆者撰文當下的時空背景，因此有些事物變遷無法被紀錄進去。此節收錄書中的內文勘誤，如果發現其他問題也歡迎回報！
+因為書本內容受限於筆者撰文當下的時空背景，因此有些事物變遷無法被紀錄進去。此節收錄書中的內文勘誤，在[博碩官網](https://www.drmaster.com.tw/bookinfo.asp?BookID=MP22435#list_s)亦能找到相關的勘誤資訊，如果發現其他問題也歡迎回報！
 
 ### 12.3.1 Breeze & BreeXe
+
 [Breeze](https://huggingface.co/MediaTek-Research) 是由聯發科技集團的 AI 研究單位聯發創新基地（MediaTek Research）所開發的繁體中文語言模型，架構與權重承襲自 Mistral，同樣為 7B 參數量的模型，但是分詞器有針對繁體中文額外擴充詞表。可能是因為參數量並不大的關係，所以能力上也只是普通而已。
 
 但是，開發團隊後來又推出了 [BreeXe-8x7B](https://tinyurl.com/llm-breexe) 的模型，與 Mixtral 一樣採用 MoE 架構，雖然有將近 50B 的參數量，但是能維持 13B 的生成速度，而且生成效果大幅提昇！雖然效果可能不如更大規模的模型，但在同等生成速度下，依然是筆者用過最頂尖的繁體中文模型。模型權重完整開源在 [HF Hub](https://huggingface.co/MediaTek-Research/Breexe-8x7B-Instruct-v0_1) 上，筆者亦有轉換並上傳 [GGUF](https://huggingface.co/PenutChen/Breexe-8x7B-Instruct-v0_1-GGUF) 的版本，此外還有官方 [Demo](https://tinyurl.com/llm-breexe-demo) 網頁可以做測試，推薦各位一定要去用看看！
