@@ -27,6 +27,12 @@
 
 因為書本內容受限於筆者撰文當下的時空背景，因此有些事物變遷無法被紀錄進去。此節收錄書中的內文勘誤，在[博碩官網](https://www.drmaster.com.tw/bookinfo.asp?BookID=MP22435#list_s)亦能找到相關的勘誤資訊，如果發現其他問題也歡迎回報！
 
+### 1.1 語言模型不能吃
+
+圖 1-1 有誤，修正後的圖檔為：
+
+![1-1](Assets/1-1.png)
+
 ### 12.3.1 Breeze & BreeXe
 
 [Breeze](https://huggingface.co/MediaTek-Research) 是由聯發科技集團的 AI 研究單位聯發創新基地（MediaTek Research）所開發的繁體中文語言模型，架構與權重承襲自 Mistral，同樣為 7B 參數量的模型，但是分詞器有針對繁體中文額外擴充詞表。可能是因為參數量並不大的關係，所以能力上也只是普通而已。
